@@ -8,6 +8,18 @@
 1. copy ```uwu.py``` to your __DEV__ directory, where you will be working on the code and making changes
 2. run ```./uwu.py -b``` to leave U.W.U. in the background
 3. start working, the changes will be copied to the __SRV__ directory
+4. run ```./uwu.py``` again to kill the process
+## How to Use
+```
+(ᵘﻌᵘ)
+help:
+    -b to run in the background
+    -h to print this screen
+    -r to reset the webroot path
+    -v to show which files are saved
+    -vv to show hashes
+    -V to print the version
+```
 ## Requirements
 None! Completely portable.  
 Although not tested in Windows, it might work there.
