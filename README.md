@@ -1,12 +1,12 @@
-# Update Webroot Util - U.W.U.
-## (ᵕᴗ ᵕ⁎) v0.5
-### A simple script to update small webapp projects
+# Update Webroot Util -- U.W.U. -- (ᵕᴗ ᵕ⁎) v0.5
+## A simple script to update small html projects
+### info: This script assumes that there are two directories
+- A project __DEV__ directory, (where the script lives)
+- An outward facing web server __SRV__ dirctory set up
 ## How it Works
-#### info: this assumes there are two directories
- - a project (DEV) directory
- - and an outward facing web server (SRV) dirctory set up
-1. put ```uwu.py``` in your DEV directory, where you will be working on the code and making changes
-2. run ```uwu.py``` or ```uwu.py -b``` if you don't have access to another tty
-3. start working, the changes will be copied to the SRV directory
+1. put ```uwu.py``` in your __DEV__ directory, where you will be working on the code and making changes
+2. run ```./uwu.py -b``` to run U.W.U. in the background
+3. start working, the changes will be copied to the __SRV__ directory
 ## Requirements
-none! completely portable
+None! Completely portable.  
+Although not tested in Windows, it might work there.

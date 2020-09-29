@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-import os
+import os, sys
 import time
 
-from sys import argv
 from random import randint
 from hashlib import md5
 
@@ -194,6 +193,8 @@ def main(args):
 
 
 if __name__ == "__main__":
+    
+    argv = sys.argv
 
     if len(argv) == 2 and argv[1] == "-r":
         try:
