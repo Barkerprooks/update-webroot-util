@@ -198,6 +198,13 @@ if __name__ == "__main__":
     if len(argv) == 2 and argv[1] == "-r":
         try:
             os.remove(RC_FILE)
+            if os.path.exists(".gitignore"):
+                with open(".gitignore", "rt") as stream:
+                    lines = [l.strip() for l in stream.readlines()]
+                with open(".gitignore", "wt") as stream:
+                    for line in lines:
+                        if not (PROGRAM in line or RC_FILE in line):
+                            print(line, file=stream)
             print("project was reset")
         except:
             print("no need to reset")
