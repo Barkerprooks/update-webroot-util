@@ -1,4 +1,5 @@
 # Update Webroot Util -- U.W.U. -- (ᵕᴗ ᵕ⁎) v0.5
+![version screenshot](/media/uwu.png)
 ## A simple script to update small html projects
 ### info: This script assumes that there are two directories
 - A project __DEV__ directory, (where the script lives)
