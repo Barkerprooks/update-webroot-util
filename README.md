@@ -3,7 +3,7 @@
 ## A simple script to update small html projects
 ### info: This script assumes that there are two directories
 - A project __DEV__ directory, (where the script will live)
-- An outward facing test web server __SRV__ dirctory set up
+- An outward facing test web server __SRV__ directory set up
 ## How it Works
 1. copy ```uwu.py``` to your __DEV__ directory, where you will be working on the code and making changes
 2. run ```./uwu.py -b``` to leave U.W.U. on in the background.
