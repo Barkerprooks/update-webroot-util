@@ -5,8 +5,8 @@
 - A project __DEV__ directory, (where the script lives)
 - An outward facing web server __SRV__ dirctory set up
 ## How it Works
-1. put ```uwu.py``` in your __DEV__ directory, where you will be working on the code and making changes
-2. run ```./uwu.py -b``` to run U.W.U. in the background
+1. copy ```uwu.py``` to your __DEV__ directory, where you will be working on the code and making changes
+2. run ```./uwu.py -b``` to leave U.W.U. in the background
 3. start working, the changes will be copied to the __SRV__ directory
 ## Requirements
 None! Completely portable.  
