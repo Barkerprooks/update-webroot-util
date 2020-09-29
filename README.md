@@ -2,7 +2,7 @@
 ![version screenshot](/media/uwu.png)
 ## A simple script to update small html projects
 ### info: This script assumes that there are two directories
-- A project __DEV__ directory, (where the script lives)
+- A project __DEV__ directory, (where the script will live)
 - An outward facing web server __SRV__ dirctory set up
 ## How it Works
 1. copy ```uwu.py``` to your __DEV__ directory, where you will be working on the code and making changes
