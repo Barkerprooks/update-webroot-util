@@ -6,7 +6,7 @@
 - An outward facing test web server __SRV__ directory set up
 ## How it Works
 1. copy ```uwu.py``` to your __DEV__ directory, where you will be working on the code and making changes
-2. run ```./uwu.py -b``` to leave U.W.U. on in the background.
+2. run ```./uwu.py -b``` to leave U.W.U. on in the background. If it's the first time, U.W.U will ask for the __SRV__ directory
 3. start working, the changes will be copied to the __SRV__ directory. __SRV__ will mirror __DEV__
 4. run ```./uwu.py``` again to kill the process
 ## How to Use
