@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 
-import os, sys
+import os
 import time
 
 from sys import argv
+from random import randint
 from hashlib import md5
 
-VERSION = 0.1
+VERSION = 0.5
 PROGRAM = __file__[2:]
-RC_FILE = ".updrc"
+RC_FILE = ".uwurc"
 NO_SAVE = [
     '..',
     PROGRAM,
@@ -16,9 +17,18 @@ NO_SAVE = [
     ".git/",
     ".gitignore/"
 ]
-
+UWU_COLLECTION = [
+    "(ᵘﻌᵘ)", "˯˽˯", "(◡ ω ◡)", "(◡ ꒳ ◡)",
+    "(◡ w ◡)", "(◡ ሠ ◡)", "(˘ω˘)", "(⑅˘꒳˘)",
+    "(˘ε˘)", "(˘³˘)", "(ᵕᴗ ᵕ⁎)", "( ͡U ω ͡U )",
+    "(U ᵕ U❁)", "(灬´ᴗ`灬)"
+]
 
 def daemonize():
+    
+    with open(RC_FILE, "rt") as stream:
+        values = [s.strip() for s in stream.readlines()]
+    
     try:
         pid = os.fork()
         if pid > 0:
@@ -36,6 +46,11 @@ def daemonize():
     except OSError as e:
         print("error fork 2")
 
+    values[2] = str(os.getpid())
+    with open(RC_FILE, "wt") as stream:
+        for value in values:
+            print(value, file=stream)
+
     sys.stdout.flush()
     sys.stderr.flush()
     null = os.devnull
@@ -43,6 +58,7 @@ def daemonize():
     os.dup2(null_in.fileno(), sys.stdin.fileno())
     os.dup2(null_out.fileno(), sys.stdout.fileno())
     os.dup2(null_err.fileno(), sys.stdout.fileno())
+
 
 def file_hashes(directory):
     for fd in os.walk(directory):
@@ -72,19 +88,23 @@ def copy(src, dst):
         with open(src, "rb") as local:
             remote.write(local.read())
 
-
 def check_for_git():
 
+    lines = []
     if os.path.isdir(".git"):
         mode = "wt+"
         if os.path.isfile(".gitignore"):
-            mode[0] = 'a'
+            mode = "at+"
+            with open(".gitignore", "rt") as stream:
+                lines = [l.strip() for l in stream.readlines()]
         with open(".gitignore", mode) as stream:
-            print(PROGRAM, file=stream)
-            print(RC_FILE, file=stream)
+            if PROGRAM not in lines:
+                print(PROGRAM, file=stream)
+            if RC_FILE not in lines:
+                print(RC_FILE, file=stream)
 
 
-def get_project(filepath) -> (str, str):
+def get_project(filepath) -> (str, str, str):
 
     if not os.path.isfile(filepath):
     
@@ -96,7 +116,7 @@ def get_project(filepath) -> (str, str):
             pass
 
         project_name = os.path.basename(os.path.realpath('.'))
-        webroot = input("path/to/webroot: ")
+        webroot = input("path/to/webroot => ")
 
         if webroot[-1] != '/':
             webroot += '/'
@@ -104,16 +124,17 @@ def get_project(filepath) -> (str, str):
         with open(filepath, "wt+") as stream:
             print(project_name, file=stream)
             print(webroot, file=stream)
+            print("0", file=stream)
 
         for item in file_hashes('.'):
             copy(item[0], webroot + item[0])
 
-        return (project_name, webroot)
+        return (project_name, webroot, 0)
 
     with open(filepath, "rt+") as stream:
-        return (i.strip() for i in stream.readlines()[:2])
+        return (i.strip() for i in stream.readlines()[:3])
 
-    return 'no name found', 'tmp-update-dir'
+    return 'no name found', 'tmp-update-dir', 0
 
 
 def watch_files(directory, webroot, verbosity=False):
@@ -138,13 +159,33 @@ def main(args):
     if len(args) == 2:
         verbosity = len(args[1][1:])
 
-    project_name, webroot = get_project(RC_FILE)
+    project_name, webroot, pid = get_project(RC_FILE)
 
+    if int(pid) > 0:
+        print("proc id [%s] already running for %s" % (pid, project_name))
+        print("  k - kill")
+        print("  r - restart")
+        print("  c - cancel")
+        while((answer := input("[k/r/c]: ")) not in ('k', 'r', 'c')):
+            print("answer should be 'k' or or 'r' or 'c'")
+        
+        if answer == 'k' or answer == 'r':
+            os.kill(int(pid), 9) 
+            with open(RC_FILE, "rt") as stream:
+                values = [s.strip() for s in stream.readlines()]
+            values[2] = '0'
+            with open(RC_FILE, "wt") as stream:
+                for value in values:
+                    print(value, file=stream)
+            if answer == 'k':
+                print("process [%s] killed" % pid)
+                exit(0)
+            print("restarting...")
+        
     NO_SAVE.append(webroot)
 
     if len(args) == 2 and args[1] == "-b":
         print("Warning: process now running in the background")
-        print("you will have to kill this manually")
         daemonize()
 
     print("[*] waiting for \"%s\" files to change..." % project_name)
@@ -157,24 +198,26 @@ if __name__ == "__main__":
     if len(argv) == 2 and argv[1] == "-r":
         try:
             os.remove(RC_FILE)
-            print("reset project")
+            print("project was reset")
         except:
             print("no need to reset")
         exit(0)
 
-    print("  ( U W U )  ")
+    uwu_end = len(UWU_COLLECTION) - 1
+    print(UWU_COLLECTION[randint(0, uwu_end)])
     
     if len(argv) == 2 and argv[1] == "-h":
         print("help:")
-        print("    -r to reset the webroot path")
         print("    -b to run in the background")
+        print("    -h to print this screen")
+        print("    -r to reset the webroot path")
         print("    -v to show which files are saved")
         print("    -vv to show hashes")
         print("    -V to print the version")
-        print("    -h to print this screen")
         exit(0)
     elif len(argv) == 2 and argv[1] == "-V":
-        print(VERSION)
+        print("Update Webroot Util -- v%s" % VERSION)
+        exit(0)
 
     try:
         main(argv)
