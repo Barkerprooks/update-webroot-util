@@ -1,8 +1,12 @@
 # Update Webroot Util - U.W.U.
-## v0.1
+## (ᵕᴗ ᵕ⁎) v0.5
 ### A simple script to update small webapp projects
 ## How it Works
-Have a small webapp you're working on locally, but don't want to store everything in the webserver directory?\
-Just drop ```update.py``` into your development directory, supply the path to your webserver's directory, run it in the background, and now every change you make to a file in that directory tree will be copied to the webserver.
+info: this assumes there are two directories
+	- a project (DEV) directory
+    - and an outward facing web server (SRV) dirctory set up
+	1. put ```uwu.py``` in your DEV directory, where you will be working on the code and making changes
+	2. run ```uwu.py``` or ```uwu.py -b``` if you don't have access to another tty
+	3. start working, the changes will be copied to the SRV directory
 ## Requirements
 none! completely portable
